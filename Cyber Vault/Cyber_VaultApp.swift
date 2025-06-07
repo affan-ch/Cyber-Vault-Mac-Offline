@@ -9,9 +9,19 @@ import SwiftUI
 
 @main
 struct Cyber_VaultApp: App {
+    @StateObject private var authManager = AuthenticationManager()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if authManager.isUnlocked {
+                ContentView()
+            } else {
+                UnlockView(authManager: authManager)
+                    .background(.ultraThinMaterial)
+
+            }
         }
+        .windowStyle(HiddenTitleBarWindowStyle())
+        .windowResizability(.contentSize) // Optional: locks to content
     }
 }
